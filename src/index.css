@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply w-screen h-screen font-mono bg-gradient-to-t from-primary to-accent flex justify-center
+}
+
+.selected-ans {
+    @apply bg-primary border-accent text-bg
+}
