@@ -1,5 +1,4 @@
-import { useState} from 'react'
-import {reactQuiz} from "../data/questions"
+import { useState } from 'react'
 import Timer from './Timer'
 import QuizResult  from './QuizResult'
 import QuestionCard from './QuestionCard'
@@ -14,7 +13,7 @@ type Question = {
 }
 
 // FC
-const Quiz = () => {
+const Quiz = ({quiz: questions} : {quiz: Question[] | null}) => {
   // states we need to store
   const [curQuestionID, setCurQuestionID] = useState(1)
   const [selectedAns, setSelectedAns] = useState<string>("")
@@ -22,11 +21,6 @@ const Quiz = () => {
   const [showResult, setShowResult] = useState(false)
   const [showTimer, setShowTimer] = useState(true)
   
-  // derived variables
-  const isLastOne = (curQuestionID === reactQuiz.length)
-  const curQuestion = reactQuiz.find(question => question.id === curQuestionID) as Question
-  const {correctAnswer}  = curQuestion;
-
   // event handler
   const handleNext = ()=> {
     setShowTimer(false)
@@ -52,16 +46,23 @@ const Quiz = () => {
     handleNext()
   }
 
+  // derived variables
+  const isLastOne = (curQuestionID === questions?.length)
+  const curQuestion = questions?.find(question => question.id === curQuestionID) as Question
+  const {correctAnswer}  = curQuestion;
+    
+  
+
   //  return JSX
   return (
     
     <div className='container border w-[32rem] min-h-min rounded-md bg-bg flex flex-col py-2 px-8 mt-60 relative'>
       {showTimer && <Timer totalDuration={8} onTimeUp={handleTimeUp}/>}
-      {showResult ? <QuizResult correctCount={correctCount} totalQuiz={reactQuiz.length} handleTryOver={handleTryOver}/> : (
+      {showResult ? <QuizResult correctCount={correctCount} totalQuiz={questions?.length as number} handleTryOver={handleTryOver}/> : (
       <>      
         <div className='info flex justify-start items-center'>
           <span className='text-3xl text-semibold text-primary'>{curQuestionID}</span>
-          <span className='text-1xl text-normal text-disabled'>/{reactQuiz.length}</span>
+          <span className='text-1xl text-normal text-disabled'>/{questions?.length}</span>
         </div>
         <QuestionCard curQuestion={curQuestion} selectedAns={selectedAns} setSelectedAns={setSelectedAns}/>
         <div className='next-btn m-3 flex justify-end'>

@@ -6,7 +6,7 @@ const Timer = ({totalDuration, onTimeUp}: {totalDuration: number, onTimeUp: ()=>
     const intervalRef = useRef<number>(0)
     // derived vars
     let progress = counter / totalDuration * 100
-    console.log("progress: ", progress);
+    // console.log("progress: ", progress);
         
     // sideEffect
     useEffect(() => {

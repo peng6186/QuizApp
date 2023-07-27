@@ -1,5 +1,5 @@
 // define types
-type Question = {
+export type Question = {
     id : number
     question : string
     type : "FIB" | "MCQs"
